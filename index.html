@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Copa Mundial 2026 — Reproductor</title>
+<title>Mundial 2026 — Xat 2000s</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
@@ -511,14 +511,17 @@
     });
 
     let disclaimerHideTimer = null;
-    playerEl.addEventListener("contextmenu", (e) => {
+    document.addEventListener("contextmenu", (e) => {
       e.preventDefault();
-      const rect = playerEl.getBoundingClientRect();
+      const vw = document.documentElement.clientWidth;
+      const vh = document.documentElement.clientHeight;
       let x = e.clientX, y = e.clientY;
-      const maxX = rect.right - 270;
-      const maxY = rect.bottom - 70;
+      const maxX = vw - 270;
+      const maxY = vh - 70;
       if(x > maxX) x = maxX;
       if(y > maxY) y = maxY;
+      if(x < 4) x = 4;
+      if(y < 4) y = 4;
       contextDisclaimer.style.left = x + "px";
       contextDisclaimer.style.top = y + "px";
       contextDisclaimer.classList.add("show");
@@ -527,6 +530,16 @@
     });
     document.addEventListener("click", () => { contextDisclaimer.classList.remove("show"); });
     document.addEventListener("scroll", () => { contextDisclaimer.classList.remove("show"); }, true);
+
+    document.addEventListener("keydown", (e) => {
+      const k = e.key;
+      const blockCombo =
+        k === "F12" ||
+        (e.ctrlKey && e.shiftKey && (k === "I" || k === "i" || k === "J" || k === "j" || k === "C" || k === "c")) ||
+        (e.ctrlKey && (k === "U" || k === "u")) ||
+        (e.metaKey && e.altKey && (k === "I" || k === "i" || k === "J" || k === "j" || k === "C" || k === "c"));
+      if(blockCombo) e.preventDefault();
+    });
   }
   const ICON_UNMUTED = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"/><path d="M16 8a5 5 0 0 1 0 8"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
   const ICON_MUTED = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9v6h4l5 5V4L7 9H3z" fill="currentColor" stroke="none"/><line x1="16" y1="9" x2="21" y2="14"/><line x1="21" y1="9" x2="16" y2="14"/></svg>';
